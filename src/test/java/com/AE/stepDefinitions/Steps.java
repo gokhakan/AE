@@ -8,6 +8,7 @@ import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.logging.Logger;
@@ -45,6 +46,8 @@ public class Steps {
                 loginPage.Signup.click();
                 break;
             case "Sign up for our newsletter":
+                JavascriptExecutor js = (JavascriptExecutor) Driver.get();
+                js.executeScript("window.scrollBy(0,250)", "");
                 signupPage.SignUpForOurNewsletter.click();
                 break;
             case "Receive special offers from our partners":
