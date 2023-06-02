@@ -8,9 +8,13 @@ import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
@@ -19,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 public class Steps {
     Logger logger = Logger.getLogger(Steps.class.getName());
     Faker faker = new Faker();
+    JavascriptExecutor js = (JavascriptExecutor) Driver.get();
     HomePage homePage = new HomePage();
     LoginPage loginPage = new LoginPage();
     SignupPage signupPage = new SignupPage();
@@ -28,6 +33,7 @@ public class Steps {
     @Given("user is on home page")
     public void user_is_on_home_page() {
         Driver.get().get(ConfigurationReader.get("url"));
+        Driver.get().manage().window().setPosition(new Point(70, 100)); //Moves test browser to the second screen
 
         //Verify that home page is visible
         assertEquals("Automation Exercise", Driver.get().getTitle());
@@ -46,7 +52,7 @@ public class Steps {
                 loginPage.Signup.click();
                 break;
             case "Sign up for our newsletter":
-                JavascriptExecutor js = (JavascriptExecutor) Driver.get();
+
                 js.executeScript("window.scrollBy(0,250)", "");
                 signupPage.SignUpForOurNewsletter.click();
                 break;
@@ -54,6 +60,7 @@ public class Steps {
                 signupPage.ReceiveSpecialOffersFromOurPartners.click();
                 break;
             case "Create Account":
+                js.executeScript("window.scrollBy(0,250)", "");
                 signupPage.CreateAccount.click();
                 break;
             case "Continue":
@@ -78,6 +85,14 @@ public class Steps {
                 assertTrue(accountCreatedPage.AccountCreated.isDisplayed());
                 break;
             case "userName":
+                System.out.println(Driver.get().findElements(By.tagName("iframe")).size());
+                List<WebElement> iframes = Driver.get().findElements(By.tagName("iframe"));
+                for (WebElement iframe : iframes) {
+                    System.out.println("iframe = " + iframe.getAttribute("name"));
+
+                }
+                Driver.get().switchTo().frame("google_esf");
+                System.out.println(Driver.get().findElement(By.xpath("//i[@class='fa fa-user']")).getText());
                 assertEquals(ConfigurationReader.get("name"), logoutPage.user.getText());
                 break;
 

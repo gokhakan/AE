@@ -30,4 +30,4 @@ Feature: AE UI tests
     And user clicks "Create Account"
     Then user sees "ACCOUNT CREATED"
     And user clicks "Continue"
-#    Then user sees "userName"
+    Then user sees "userName"

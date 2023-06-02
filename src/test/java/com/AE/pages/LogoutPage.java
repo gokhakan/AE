@@ -4,7 +4,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LogoutPage extends HomePage {
-    @FindBy(xpath = "//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[10]/a/b")
+    @FindBy(xpath = "//i[@class='fa fa-user']")
     public WebElement user;
+    @FindBy(xpath = "//div[@class='row']")
+    public WebElement Header;
 
 }
