@@ -113,6 +113,9 @@ public class Steps {
             case "Your email or password is incorrect!":
                 assertTrue(homePage.YourEmailOrPasswordIsIncorrect.isDisplayed());
                 break;
+            case "Logged in as correct name":
+                assertEquals("Logged in as Hakan Gok", homePage.LoggedInAsCorrectUser.getText());
+                break;
 
             default:
                 logger.warning("Message not displayed!");
@@ -190,10 +193,26 @@ public class Steps {
             case "Incorrect login password":
                 homePage.LoginPassword.sendKeys(ConfigurationReader.get("IncorrectLoginPassword"));
                 break;
+            case "CorrectLoginEmail":
+                homePage.LoginEmail.sendKeys(ConfigurationReader.get("CorrectLoginEmail"));
+                break;
+            case "CorrectLoginPassword":
+                homePage.LoginPassword.sendKeys(ConfigurationReader.get("CorrectLoginPassword"));
+                break;
             default:
                 logger.warning("No field data entered");
 
         }
+    }
+
+    @When("user clicks Logout after successful login")
+    public void user_clicks_Logout_after_successful_login() {
+        homePage.Logout.click();
+    }
+
+    @Then("user is on login page")
+    public void user_is_on_login_page() {
+        assertEquals("https://automationexercise.com/login", Driver.get().getCurrentUrl());
     }
 
 

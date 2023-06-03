@@ -16,12 +16,12 @@ public class HomePage {
     @FindBy(xpath = "//*[@class='fa fa-lock']")
     public WebElement SignupOrLogin;
 
-    @FindBy (xpath = "//i[@class='fa fa-lock']")
+    @FindBy(xpath = "//i[@class='fa fa-lock']")
     public WebElement Logout;
 
-    @FindBy (xpath = "//i[@class='fa fa-trash-o']")
+    @FindBy(xpath = "//i[@class='fa fa-trash-o']")
     public WebElement DeleteAccount;
-    @FindBy (id = "dismiss-button")
+    @FindBy(id = "dismiss-button")
     public WebElement Close;
 
     @FindBy(xpath = "//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[10]")
@@ -39,11 +39,12 @@ public class HomePage {
     @FindBy(xpath = "//button[@data-qa='login-button']")
     public WebElement Login;
 
-    @FindBy (xpath = "//p[text()='Your email or password is incorrect!']")
+    @FindBy(xpath = "//p[text()='Your email or password is incorrect!']")
     public WebElement YourEmailOrPasswordIsIncorrect;
+    @FindBy(xpath = "//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[10]/a")
+    public WebElement LoggedInAsCorrectUser;
 
-
-    public void closePopupWindow(){
+    public void closePopupWindow() {
         Close.click();
     }
 

@@ -1,8 +1,8 @@
 @regression
 Feature: New user registers
 
-#  Test Case 1: Register User
   @register
+#  Test Case 1: Register User
   Scenario: Register User
     Given user is on home page
     When user clicks "Signup/Login"
