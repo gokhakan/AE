@@ -1,7 +1,8 @@
 @regression
-Feature: AE UI tests
+Feature: New user registers
 
-  @wip
+#  Test Case 1: Register User
+  @register
   Scenario: Register User
     Given user is on home page
     When user clicks "Signup/Login"
@@ -31,3 +32,4 @@ Feature: AE UI tests
     Then user sees "ACCOUNT CREATED"
     And user clicks "Continue"
     Then user sees "userName"
+    And user clicks "Delete account"

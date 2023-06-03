@@ -8,13 +8,10 @@ import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +27,8 @@ public class Steps {
     AccountCreatedPage accountCreatedPage = new AccountCreatedPage();
     LogoutPage logoutPage = new LogoutPage();
 
+    String email = faker.internet().emailAddress();
+
     @Given("user is on home page")
     public void user_is_on_home_page() {
         Driver.get().get(ConfigurationReader.get("url"));
@@ -42,7 +41,8 @@ public class Steps {
     }
 
     @When("user clicks {string}")
-    public void user_clicks(String menuItem) {
+    public void user_clicks(String menuItem) throws InterruptedException {
+        BrowserUtils.waitForPageToLoad(100);
         switch (menuItem) {
             case "Signup/Login":
                 homePage.SignupOrLogin.click();
@@ -64,8 +64,22 @@ public class Steps {
                 signupPage.CreateAccount.click();
                 break;
             case "Continue":
+                Thread.sleep(10000);
                 accountCreatedPage.Continue.click();
+                Thread.sleep(10000);
                 break;
+            case "Delete account":
+                homePage.DeleteAccount.click();
+                break;
+            case "Logout":
+                Driver.get().navigate().back();
+                accountCreatedPage.Continue.click();
+                homePage.Logout.click();
+                break;
+            case "Login":
+                homePage.Login.click();
+                break;
+
             default:
                 logger.warning("No menu item selected");
 
@@ -73,7 +87,7 @@ public class Steps {
     }
 
     @Then("user sees {string}")
-    public void user_sees(String message) {
+    public void user_sees(String message) throws InterruptedException {
         switch (message) {
             case "New User Signup!":
                 assertTrue(loginPage.NewUserSignup.isDisplayed());
@@ -85,15 +99,19 @@ public class Steps {
                 assertTrue(accountCreatedPage.AccountCreated.isDisplayed());
                 break;
             case "userName":
-                System.out.println(Driver.get().findElements(By.tagName("iframe")).size());
-                List<WebElement> iframes = Driver.get().findElements(By.tagName("iframe"));
-                for (WebElement iframe : iframes) {
-                    System.out.println("iframe = " + iframe.getAttribute("name"));
+                BrowserUtils.waitForPageToLoad(100);
+                Driver.get().navigate().back();
+                accountCreatedPage.Continue.click();
+                assertTrue(homePage.LogedinAs.getText().contains(ConfigurationReader.get("name")));
+                break;
 
-                }
-                Driver.get().switchTo().frame("google_esf");
-                System.out.println(Driver.get().findElement(By.xpath("//i[@class='fa fa-user']")).getText());
-                assertEquals(ConfigurationReader.get("name"), logoutPage.user.getText());
+            case "Loggedin userName":
+//                assertTrue(homePage.LogedinAsinLogin.getText().contains(ConfigurationReader.get("name")));
+                System.out.println(homePage.LogedinAsinLogin.getText());
+                break;
+
+            case "Your email or password is incorrect!":
+                assertTrue(homePage.YourEmailOrPasswordIsIncorrect.isDisplayed());
                 break;
 
             default:
@@ -109,7 +127,7 @@ public class Steps {
                 loginPage.Name.sendKeys(ConfigurationReader.get("name"));
                 break;
             case "Email":
-                loginPage.SignupEmailAddress.sendKeys(faker.internet().emailAddress());
+                loginPage.SignupEmailAddress.sendKeys(email);
                 break;
             case "Title":
                 signupPage.Mr.click();
@@ -159,6 +177,18 @@ public class Steps {
                 break;
             case "Mobile number":
                 signupPage.MobileNumber.sendKeys(ConfigurationReader.get("MobileNumber"));
+                break;
+            case "Login email":
+                homePage.LoginEmail.sendKeys(email);
+                break;
+            case "Login password":
+                homePage.LoginPassword.sendKeys(ConfigurationReader.get("password"));
+                break;
+            case "Incorrect login email":
+                homePage.LoginEmail.sendKeys(ConfigurationReader.get("IncorrectLoginEmail"));
+                break;
+            case "Incorrect login password":
+                homePage.LoginPassword.sendKeys(ConfigurationReader.get("IncorrectLoginPassword"));
                 break;
             default:
                 logger.warning("No field data entered");

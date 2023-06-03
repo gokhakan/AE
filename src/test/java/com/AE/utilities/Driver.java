@@ -11,6 +11,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.util.Arrays;
+
 public class Driver {
     private Driver() {
 
@@ -26,7 +28,9 @@ public class Driver {
             switch (browser) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
+                    ChromeOptions option = new ChromeOptions();
+                    option.setExperimentalOption("excludeSwitches", Arrays.asList("disable-popup-blocking"));
+                    driver = new ChromeDriver(option);
                     break;
                 case "chrome-headless":
                     WebDriverManager.chromedriver().setup();
