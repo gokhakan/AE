@@ -1,0 +1,1 @@
+This is a simple text file to be used for file upload test.

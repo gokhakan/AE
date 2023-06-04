@@ -44,6 +44,9 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[10]/a")
     public WebElement LoggedInAsCorrectUser;
 
+    @FindBy(xpath = "//i[@class='fa fa-envelope']")
+    public WebElement ContactUs;
+
     public void closePopupWindow() {
         Close.click();
     }

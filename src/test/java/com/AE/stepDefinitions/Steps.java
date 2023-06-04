@@ -8,8 +8,10 @@ import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.logging.Logger;
@@ -26,6 +28,7 @@ public class Steps {
     SignupPage signupPage = new SignupPage();
     AccountCreatedPage accountCreatedPage = new AccountCreatedPage();
     LogoutPage logoutPage = new LogoutPage();
+    ContactUsPage contactUsPage = new ContactUsPage();
 
     String email = faker.internet().emailAddress();
 
@@ -52,7 +55,6 @@ public class Steps {
                 loginPage.Signup.click();
                 break;
             case "Sign up for our newsletter":
-
                 js.executeScript("window.scrollBy(0,250)", "");
                 signupPage.SignUpForOurNewsletter.click();
                 break;
@@ -78,6 +80,19 @@ public class Steps {
                 break;
             case "Login":
                 homePage.Login.click();
+                break;
+            case "Contact us":
+                homePage.ContactUs.click();
+                break;
+            case "Submit":
+                js.executeScript("window.scrollBy(0,250)", "");
+                contactUsPage.Submit.click();
+                Alert alert = Driver.get().switchTo().alert();
+                alert.accept();
+                break;
+            case "Home":
+                homePage.Home.click();
+                assertEquals("Automation Exercise - Contact Us", Driver.get().getTitle());
                 break;
 
             default:
@@ -117,6 +132,14 @@ public class Steps {
             case "Email Address already exist!":
                 assertEquals("Email Address already exist!", signupPage.EmailAddressAlreadyExist.getText());
                 break;
+            case "Get In Touch":
+                assertEquals("GET IN TOUCH", contactUsPage.GetInTouch.getText());
+                break;
+            case "Success! Your details have been submitted successfully":
+                assertEquals("Success! Your details have been submitted successfully.", contactUsPage.SuccessYourDetailsHaveBeenSubmittedSuccessfully.getText());
+                break;
+
+
             default:
                 logger.warning("Message not displayed!");
         }
@@ -205,6 +228,19 @@ public class Steps {
             case "RegisteredLoginEmail":
                 loginPage.SignupEmailAddress.sendKeys(ConfigurationReader.get("RegisteredLoginEmail"));
                 break;
+            case "Contact name":
+                contactUsPage.Name.sendKeys(ConfigurationReader.get("RegisteredUserName"));
+                break;
+            case "Contact email":
+                contactUsPage.Email.sendKeys(ConfigurationReader.get("RegisteredLoginEmail"));
+                break;
+            case "Subject":
+                contactUsPage.Subject.sendKeys(contactUsPage.subject);
+                break;
+            case "Message":
+                contactUsPage.Message.sendKeys(contactUsPage.message);
+                break;
+
             default:
                 logger.warning("No field data entered");
 
@@ -219,6 +255,12 @@ public class Steps {
     @Then("user is on login page")
     public void user_is_on_login_page() {
         assertEquals("https://automationexercise.com/login", Driver.get().getCurrentUrl());
+    }
+
+    @Then("user uploads {string}")
+    public void user_uploads(String fileName) {
+        WebElement uploadFile = contactUsPage.ChooseFile;
+        uploadFile.sendKeys("/Users/hakangok/IdeaProjects/AE/src/test/resources/TestData/basicFile.txt");
     }
 
 
