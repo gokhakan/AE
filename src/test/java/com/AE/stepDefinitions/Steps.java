@@ -94,6 +94,10 @@ public class Steps {
                 homePage.Home.click();
                 assertEquals("Automation Exercise - Contact Us", Driver.get().getTitle());
                 break;
+            case "Test Cases":
+                homePage.TestCases.click();
+                break;
+
 
             default:
                 logger.warning("No menu item selected");
@@ -261,6 +265,16 @@ public class Steps {
     public void user_uploads(String fileName) {
         WebElement uploadFile = contactUsPage.ChooseFile;
         uploadFile.sendKeys("/Users/hakangok/IdeaProjects/AE/src/test/resources/TestData/basicFile.txt");
+    }
+    @Then("user is on {string} page")
+    public void user_is_on_page(String pageName) {
+        switch (pageName){
+            case "Test Cases":
+                assertEquals("Automation Exercise", Driver.get().getTitle());
+                break;
+            default:
+                logger.warning("No page name entered");
+        }
     }
 
 

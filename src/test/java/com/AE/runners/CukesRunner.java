@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com/AE/stepDefinitions",
         dryRun = false,
-        tags = "@contact"
+        tags = "@test_cases"
 )
 public class CukesRunner {
 }
