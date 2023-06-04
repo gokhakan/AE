@@ -33,3 +33,14 @@ Feature: New user registers
     And user clicks "Continue"
     Then user sees "userName"
     And user clicks "Delete account"
+
+  @register_with_existing_email
+#  Test Case 5:
+  Scenario: Register User with existing email
+    Given user is on home page
+    When user clicks "Signup/Login"
+    Then user sees "New User Signup!"
+    And  user enters "RegisteredUserName"
+    And user enters "RegisteredLoginEmail"
+    And user clicks "Signup"
+    Then user sees "Email Address already exist!"

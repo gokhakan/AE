@@ -45,5 +45,10 @@ public class SignupPage extends HomePage {
     @FindBy(xpath = "//button[@data-qa='create-account']")
     public WebElement CreateAccount;
 
+    @FindBy(xpath = "//p[text()='Email Address already exist!']")
+    public WebElement EmailAddressAlreadyExist;
+
+
+
 
 }

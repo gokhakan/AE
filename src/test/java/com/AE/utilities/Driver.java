@@ -12,6 +12,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Driver {
     private Driver() {
@@ -28,9 +30,16 @@ public class Driver {
             switch (browser) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    ChromeOptions option = new ChromeOptions();
-                    option.setExperimentalOption("excludeSwitches", Arrays.asList("disable-popup-blocking"));
-                    driver = new ChromeDriver(option);
+                    ChromeOptions options = new ChromeOptions();
+                    options.addArguments("--start-maximized");
+                    options.addArguments("--disable-web-security");
+                    options.addArguments("--no-proxy-server");
+                    Map<String, Object> prefs = new HashMap<String, Object>();
+                    prefs.put("credentials_enable_service", false);
+                    prefs.put("profile.password_manager_enabled", false);
+                    options.setExperimentalOption("prefs", prefs);
+                    options.setExperimentalOption("excludeSwitches", Arrays.asList("disable-popup-blocking"));
+                    driver = new ChromeDriver(options);
                     break;
                 case "chrome-headless":
                     WebDriverManager.chromedriver().setup();

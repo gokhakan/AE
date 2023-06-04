@@ -104,19 +104,19 @@ public class Steps {
                 accountCreatedPage.Continue.click();
                 assertTrue(homePage.LogedinAs.getText().contains(ConfigurationReader.get("name")));
                 break;
-
             case "Loggedin userName":
 //                assertTrue(homePage.LogedinAsinLogin.getText().contains(ConfigurationReader.get("name")));
                 System.out.println(homePage.LogedinAsinLogin.getText());
                 break;
-
             case "Your email or password is incorrect!":
                 assertTrue(homePage.YourEmailOrPasswordIsIncorrect.isDisplayed());
                 break;
             case "Logged in as correct name":
                 assertEquals("Logged in as Hakan Gok", homePage.LoggedInAsCorrectUser.getText());
                 break;
-
+            case "Email Address already exist!":
+                assertEquals("Email Address already exist!", signupPage.EmailAddressAlreadyExist.getText());
+                break;
             default:
                 logger.warning("Message not displayed!");
         }
@@ -194,10 +194,16 @@ public class Steps {
                 homePage.LoginPassword.sendKeys(ConfigurationReader.get("IncorrectLoginPassword"));
                 break;
             case "CorrectLoginEmail":
-                homePage.LoginEmail.sendKeys(ConfigurationReader.get("CorrectLoginEmail"));
+                signupPage.LoginEmail.sendKeys(ConfigurationReader.get("RegisteredLoginEmail"));
                 break;
             case "CorrectLoginPassword":
-                homePage.LoginPassword.sendKeys(ConfigurationReader.get("CorrectLoginPassword"));
+                signupPage.LoginPassword.sendKeys(ConfigurationReader.get("RegisteredLoginPassword"));
+                break;
+            case "RegisteredUserName":
+                loginPage.Name.sendKeys(ConfigurationReader.get("RegisteredUserName"));
+                break;
+            case "RegisteredLoginEmail":
+                loginPage.SignupEmailAddress.sendKeys(ConfigurationReader.get("RegisteredLoginEmail"));
                 break;
             default:
                 logger.warning("No field data entered");
