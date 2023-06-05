@@ -50,6 +50,9 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[5]/a")
     public WebElement TestCases;
 
+    @FindBy(xpath = "//i[@class='material-icons card_travel']")
+    public WebElement Products;
+
     public void closePopupWindow() {
         Close.click();
     }

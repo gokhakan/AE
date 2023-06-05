@@ -31,9 +31,10 @@ public class Driver {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
-                    options.addArguments("--start-maximized");
+                    //options.addArguments("--start-maximized");
                     options.addArguments("--disable-web-security");
                     options.addArguments("--no-proxy-server");
+                    options.addArguments("disable-popup-blocking");
                     Map<String, Object> prefs = new HashMap<String, Object>();
                     prefs.put("credentials_enable_service", false);
                     prefs.put("profile.password_manager_enabled", false);

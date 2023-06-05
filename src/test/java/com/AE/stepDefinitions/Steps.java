@@ -29,6 +29,8 @@ public class Steps {
     AccountCreatedPage accountCreatedPage = new AccountCreatedPage();
     LogoutPage logoutPage = new LogoutPage();
     ContactUsPage contactUsPage = new ContactUsPage();
+    ProductsPage productsPage = new ProductsPage();
+    ProductDetails1Page productDetails1Page=new ProductDetails1Page();
 
     String email = faker.internet().emailAddress();
 
@@ -97,6 +99,15 @@ public class Steps {
             case "Test Cases":
                 homePage.TestCases.click();
                 break;
+            case "Products":
+                homePage.Products.click();
+                break;
+            case "product1":
+                BrowserUtils.waitFor(4);
+                js.executeScript("window.scrollBy(0,250)", "");
+                productsPage.Product1.click();
+                break;
+
 
 
             default:
@@ -142,7 +153,15 @@ public class Steps {
             case "Success! Your details have been submitted successfully":
                 assertEquals("Success! Your details have been submitted successfully.", contactUsPage.SuccessYourDetailsHaveBeenSubmittedSuccessfully.getText());
                 break;
-
+            case "Blue Top":
+                assertEquals("Blue Top", productDetails1Page.BlueTop.getText());
+                break;
+            case "Category":
+                assertEquals("Category: Women > Tops", productDetails1Page.Category.getText());
+                break;
+            case "Price":
+                assertTrue(productDetails1Page.Price.isDisplayed());
+                break;
 
             default:
                 logger.warning("Message not displayed!");
@@ -271,6 +290,13 @@ public class Steps {
         switch (pageName){
             case "Test Cases":
                 assertEquals("Automation Exercise", Driver.get().getTitle());
+                break;
+            case "Products":
+                if(Driver.get().getCurrentUrl().equals("https://automationexercise.com/#google_vignette")){
+                    Driver.get().navigate().back();
+                }
+                js.executeScript("window.scrollBy(0,250)", "");
+                assertTrue(productsPage.Product1.isDisplayed());
                 break;
             default:
                 logger.warning("No page name entered");
