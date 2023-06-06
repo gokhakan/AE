@@ -23,5 +23,5 @@ Go to:
 
 `target/default-html-reports/index.html`
 
-#Hello Alixe
+# Hello `Alixe`
 
